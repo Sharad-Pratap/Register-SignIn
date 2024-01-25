@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import authRoute from './routes/authRoute';
-
+import cors from 'cors';
 
 
 dotenv.config();
@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(express.Router());
 app.use(express.urlencoded({extended : true}));
 app.use(cookieParser());
+app.use(cors())
 
 
 

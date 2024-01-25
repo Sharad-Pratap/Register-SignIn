@@ -9,7 +9,7 @@ const secretToken = process.env.access_token_secret;
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const {  username, password, email} = req.body;
+    const {  username, email, password} = req.body;
 
 
     if (!email || !password || !username  ) {
@@ -26,9 +26,8 @@ export const register = async (req: Request, res: Response) => {
     //saving the user data
     const user: IUser = new User({
       username,
-      password: await bcrypt.hash(req.body.password, 10),
-      email
-      
+      email,
+      password: await bcrypt.hash(req.body.password, 10)      
     });
     const savedUser = await user.save();
 
@@ -73,7 +72,7 @@ export const login = async (req: Request, res: Response) => {
     });
     res.cookie("accessToken", accessToken, { httpOnly: true });
 
-    res.json("logged in success");
+    res.json({result:user, accessToken});
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: error });
